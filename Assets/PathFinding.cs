@@ -27,18 +27,18 @@ public class PathFinding : MonoBehaviour
     {
     }
 
-    public IEnumerator Dijsktra(Vector3Int startPoint, Vector3Int endPoint, float frameTime)
+    public List<Vector2> Dijsktra(Node[,] graph, Vector3Int startPoint, Vector3Int endPoint)
     {
         //initialisation
         Node startNode = new Node(startPoint.x, startPoint.y, 0, 0);
         Node endNode = new Node(endPoint.x, endPoint.y, 0, 0);
 
+        List<Vector2> res = new List<Vector2>();
+
         List<Node> explored = new List<Node>();
         List<Node> chosen = new List<Node>();
 
         Node currentNode = startNode;
-
-        Node[,] graph = new Node[width, height];
 
         //TODO : Bien initialiser les nodes avec l'attribut distance "1" en fonction de la pente
         for (int i = 0; i < width; i++)
@@ -50,6 +50,7 @@ public class PathFinding : MonoBehaviour
         }
         graph[startPoint.x, startPoint.y] = startNode;
 
+        //exploration
         while (!currentNode.Equal(endNode))
         {
             //on étend aux voisins
@@ -59,15 +60,15 @@ public class PathFinding : MonoBehaviour
             //choisir le plus bas cout parmis les noeuds explorés. par défaut explored[0] grace au tri.
             currentNode = explored[0];
             explored.RemoveAt(0);
-            yield return new WaitForSeconds(frameTime);
         }
-        //exploration terminée. Il faut maintenant chercher le chemin !
+        //calcul du chemin
         while (!currentNode.Equal(startNode))
         {
+            res.Add(new Vector2(currentNode.x, currentNode.y));
             currentNode = currentNode.parent;
-            yield return new WaitForSeconds(frameTime);
         }
 
+        return res;
     }
 
     static int SortByCost(Node n1, Node n2)
