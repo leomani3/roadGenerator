@@ -41,13 +41,13 @@ public class PathFinding : MonoBehaviour
         Node currentNode = startNode;
 
         //TODO : Bien initialiser les nodes avec l'attribut distance "1" en fonction de la pente
-        for (int i = 0; i < width; i++)
+        /*for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 graph[i, j] = new Node(i, j, -1, 1);
             }
-        }
+        }*/
         graph[startPoint.x, startPoint.y] = startNode;
 
         //exploration

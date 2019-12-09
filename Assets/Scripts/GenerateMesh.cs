@@ -68,7 +68,7 @@ public class GenerateMesh : MonoBehaviour
         map = m;
         dijkstra.height = height;
         dijkstra.width = width;
-        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(1, 1), new Vector2Int(200, 230));
+        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(1, 1), new Vector2Int(25, 25));
         //Debug.Log(result.Count);
         for (int i = 0; i < result.Count; i++)
         {

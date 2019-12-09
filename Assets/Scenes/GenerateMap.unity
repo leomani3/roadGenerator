@@ -287,10 +287,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d11028589b0a8241998bd593e2d33d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depth: 150
+  depth: 4
   scale: 3
-  width: 256
-  height: 256
+  width: 32
+  height: 32
   dijkstra: {fileID: 188511951}
   cube: {fileID: 1645775865}
 --- !u!154 &1605259628
