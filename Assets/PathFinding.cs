@@ -78,7 +78,7 @@ public class PathFinding : MonoBehaviour
 
     public void addNeighbor(Node currentNode, int neighborX, int neighborY, Node[,] graph, List<Node> explored, Node startNode, Node endNode)
     {
-        if (graph[neighborX, neighborY].cost == -1 || (graph[neighborX, neighborY].cost != -2 && graph[neighborX, neighborY].cost != -1 && currentNode.cost + graph[neighborX, neighborY].distance < graph[neighborX, neighborY].cost))
+        if (graph[neighborX, neighborY].cost == -1 || (graph[neighborX, neighborY].cost != -1 && currentNode.cost + graph[neighborX, neighborY].distance < graph[neighborX, neighborY].cost))
         {
             graph[neighborX, neighborY].cost = currentNode.cost + graph[neighborX, neighborY].distance;
             graph[neighborX, neighborY].parent = currentNode;
