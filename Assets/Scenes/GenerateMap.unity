@@ -289,8 +289,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depth: 150
   scale: 3
-  width: 512
-  height: 512
+  width: 256
+  height: 256
   dijkstra: {fileID: 188511951}
   cube: {fileID: 1645775865}
 --- !u!154 &1605259628
