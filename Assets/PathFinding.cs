@@ -27,13 +27,13 @@ public class PathFinding : MonoBehaviour
     {
     }
 
-    public List<Vector2> Dijsktra(Node[,] graph, Vector2Int startPoint, Vector2Int endPoint)
+    public List<Vector2Int> Dijsktra(Node[,] graph, Vector2Int startPoint, Vector2Int endPoint)
     {
         //initialisation
         Node startNode = new Node(startPoint.x, startPoint.y, 0, 0);
         Node endNode = new Node(endPoint.x, endPoint.y, 0, 0);
 
-        List<Vector2> res = new List<Vector2>();
+        List<Vector2Int> res = new List<Vector2Int>();
 
         List<Node> explored = new List<Node>();
         List<Node> chosen = new List<Node>();
@@ -64,7 +64,7 @@ public class PathFinding : MonoBehaviour
         //calcul du chemin
         while (!currentNode.Equal(startNode))
         {
-            res.Add(new Vector2(currentNode.x, currentNode.y));
+            res.Add(new Vector2Int(currentNode.x, currentNode.y));
             currentNode = currentNode.parent;
         }
 

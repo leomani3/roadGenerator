@@ -6,7 +6,7 @@ public class GenerateMesh : MonoBehaviour
 {
     float[,] map;
     //Node[,] mapDijkstra;
-    List<Vector2> result;
+    List<Vector2Int> result;
 
     //hauteurs des "montagnes"
     public int depth;
@@ -20,13 +20,11 @@ public class GenerateMesh : MonoBehaviour
     void Start()
     {
         Terrain terrain = GetComponent<Terrain>();
-        result = new List<Vector2>();
+        result = new List<Vector2Int>();
         terrain.terrainData = GenerateTerrain(terrain.terrainData);
         map = new float[width, height];
         //mapDijkstra = new Node[width, height];
         GenerateMap();
-        Instantiate(cube, new Vector3(511, map[511, 511]*depth , 511), Quaternion.identity);
-        Instantiate(cube, new Vector3(501, map[501, 501] * depth, 501), Quaternion.identity);
     }
 
    TerrainData GenerateTerrain(TerrainData terrainData)
@@ -48,11 +46,17 @@ public class GenerateMesh : MonoBehaviour
             for (int y = 0; y < width; y++)
             {
                 m[x, y] = CalculPerlinNoise(x, y);
-                mapDijkstra[x, y] = new Node(x, y, 0, 1);
+                mapDijkstra[x, y] = new Node(x, y, -1, 1);
             }
         }
         map = m;
+        dijkstra.height = height;
+        dijkstra.width = width;
         result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(1, 1), new Vector2Int(1, 10));
+        for (int i = 0; i < result.Count; i++)
+        {
+            Instantiate(cube, new Vector3(result[i].x, map[result[i].x,result[i].y] * depth, result[i].y), Quaternion.identity);
+        }
         return m;
     }
 
