@@ -5,9 +5,8 @@ using UnityEngine;
 public class GenerateMesh : MonoBehaviour
 {
     float[,] map;
-    Node[,] mapDijkstra;
+    //Node[,] mapDijkstra;
     List<Vector2Int> result;
-
     //hauteurs des "montagnes"
     public int depth;
     //largeur des "montagnes"
@@ -16,14 +15,14 @@ public class GenerateMesh : MonoBehaviour
     public int height;
     public PathFinding dijkstra;
     public GameObject cube;
+    public int nbSousRoutes;
 
     void Start()
     {
         Terrain terrain = GetComponent<Terrain>();
         result = new List<Vector2Int>();
-        
         map = new float[width, height];
-        mapDijkstra = new Node[width, height];
+        //mapDijkstra = new Node[width, height];
         dijkstra.width = width;
         dijkstra.height = height;
         //GenerateMap();
@@ -44,36 +43,43 @@ public class GenerateMesh : MonoBehaviour
     {
         Node[,] mapDijkstra = new Node[width, height];
         float[,] m = new float[width, height];
-        for(int x = 0; x < width; x++)
+        dijkstra.height = height;
+        dijkstra.width = width;
+        for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
                 m[x, y] = CalculPerlinNoise(x, y);
                 if (m[x,y] * depth > 90.0f)
                 {
-                    //Debug.Log("il est haut");
                     mapDijkstra[x, y] = new Node(x, y, -1, 100000);
                 }
                 else
                 {
-                   // Debug.Log("il est bas");
                     mapDijkstra[x, y] = new Node(x, y, -1, Mathf.RoundToInt(Mathf.Pow(m[x, y] * depth, 1)));
                 }
-                //Debug.Log(mapDijkstra[x, y].distance);
-                //Debug.Log(Mathf.RoundToInt(m[x, y] * depth));
-                //mapDijkstra[x, y] = new Node(x, y, -1, Mathf.RoundToInt(Mathf.Pow(m[x, y] * depth, 4)));
             }
         }
-        
+
         map = m;
         dijkstra.height = height;
         dijkstra.width = width;
         result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(0, 0), new Vector2Int(400, 300));
-        //Debug.Log(result.Count);
-        Instantiate(cube, new Vector3(width / 2, map[width / 2, height / 2] * depth, height / 2), Quaternion.identity);
         for (int i = 0; i < result.Count; i++)
         {
             Instantiate(cube, new Vector3(result[i].x, map[result[i].y,result[i].x] * depth, result[i].y), Quaternion.identity);
+        }
+
+        //sous routes
+        List<Vector2Int> res = new List<Vector2Int>();
+        for (int i = 0; i < nbSousRoutes; i++)
+        {
+            res.AddRange(dijkstra.Dijsktra(mapDijkstra, result[Random.Range(2, result.Count)], new Vector2Int(Random.Range(5, 400), Random.Range(5, 400))));
+        }
+
+        for (int j = 0; j < res.Count; j++)
+        {
+            Instantiate(cube, new Vector3(res[j].x, map[res[j].y, res[j].x] * depth, res[j].y), Quaternion.identity);
         }
         return m;
     }
@@ -86,4 +92,8 @@ public class GenerateMesh : MonoBehaviour
         return Mathf.PerlinNoise(xCoord, yCoord);
     }
 
+    void createLittleRoad()
+    {
+        
+    }
 }

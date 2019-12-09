@@ -293,6 +293,7 @@ MonoBehaviour:
   height: 512
   dijkstra: {fileID: 188511951}
   cube: {fileID: 1645775865}
+  nbSousRoutes: 3
 --- !u!154 &1605259628
 TerrainCollider:
   m_ObjectHideFlags: 0
