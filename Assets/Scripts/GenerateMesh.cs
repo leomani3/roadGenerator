@@ -13,16 +13,21 @@ public class GenerateMesh : MonoBehaviour
     public int width;
     public int height;
 
+    public GameObject cube;
+
     void Start()
     {
         Terrain terrain = GetComponent<Terrain>();
         terrain.terrainData = GenerateTerrain(terrain.terrainData);
         map = new float[width, height];  
         GenerateMap();
+        Instantiate(cube, new Vector3(511, map[511, 511]*depth , 511), Quaternion.identity);
+        Instantiate(cube, new Vector3(501, map[501, 501] * depth, 501), Quaternion.identity);
     }
 
    TerrainData GenerateTerrain(TerrainData terrainData)
     {
+        //genere le bon nombre de données
         terrainData.heightmapResolution = width + 1;
         terrainData.size = new Vector3(width, depth, height);
         terrainData.SetHeights(0, 0, GenerateMap());
@@ -51,4 +56,5 @@ public class GenerateMesh : MonoBehaviour
 
         return Mathf.PerlinNoise(xCoord, yCoord);
     }
+
 }
