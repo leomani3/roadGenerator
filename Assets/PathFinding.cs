@@ -58,6 +58,7 @@ public class PathFinding : MonoBehaviour
             //on tri explored dans l'ordre croissant des couts
             explored.Sort(SortByCost);
             //choisir le plus bas cout parmis les noeuds explorés. par défaut explored[0] grace au tri.
+            //Debug.Log(explored.Count);
             currentNode = explored[0];
             explored.RemoveAt(0);
         }
