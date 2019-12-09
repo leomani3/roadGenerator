@@ -27,7 +27,7 @@ public class PathFinding : MonoBehaviour
     {
     }
 
-    public List<Vector2> Dijsktra(Node[,] graph, Vector3Int startPoint, Vector3Int endPoint)
+    public List<Vector2> Dijsktra(Node[,] graph, Vector2Int startPoint, Vector2Int endPoint)
     {
         //initialisation
         Node startNode = new Node(startPoint.x, startPoint.y, 0, 0);
