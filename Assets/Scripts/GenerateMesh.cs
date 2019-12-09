@@ -57,9 +57,9 @@ public class GenerateMesh : MonoBehaviour
                 else
                 {
                    // Debug.Log("il est bas");
-                    mapDijkstra[x, y] = new Node(x, y, -1, Mathf.RoundToInt(Mathf.Pow(m[x, y] * depth, 2)));
+                    mapDijkstra[x, y] = new Node(x, y, -1, Mathf.RoundToInt(Mathf.Pow(m[x, y] * depth, 1)));
                 }
-                Debug.Log(mapDijkstra[x, y].distance);
+                //Debug.Log(mapDijkstra[x, y].distance);
                 //Debug.Log(Mathf.RoundToInt(m[x, y] * depth));
                 //mapDijkstra[x, y] = new Node(x, y, -1, Mathf.RoundToInt(Mathf.Pow(m[x, y] * depth, 4)));
             }
@@ -68,11 +68,12 @@ public class GenerateMesh : MonoBehaviour
         map = m;
         dijkstra.height = height;
         dijkstra.width = width;
-        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(1, 1), new Vector2Int(200, 200));
+        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(0, 0), new Vector2Int(400, 300));
         //Debug.Log(result.Count);
+        Instantiate(cube, new Vector3(width / 2, map[width / 2, height / 2] * depth, height / 2), Quaternion.identity);
         for (int i = 0; i < result.Count; i++)
         {
-            Instantiate(cube, new Vector3(result[i].x, map[result[i].x,result[i].y] * depth, result[i].y), Quaternion.identity);
+            Instantiate(cube, new Vector3(result[i].x, map[result[i].y,result[i].x] * depth, result[i].y), Quaternion.identity);
         }
         return m;
     }
