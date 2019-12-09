@@ -52,7 +52,7 @@ public class GenerateMesh : MonoBehaviour
             }
         }
         map = m;
-        result = dijkstra.Dijsktra(mapDijkstra, new Vector3Int(1, 1, 0), new Vector3Int(1, 10, 0));
+        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(1, 1), new Vector2Int(1, 10));
         return m;
     }
 
