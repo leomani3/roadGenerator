@@ -52,7 +52,7 @@ public class GenerateMesh : MonoBehaviour
         map = m;
         dijkstra.height = height;
         dijkstra.width = width;
-        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(1, 1), new Vector2Int(1, 10));
+        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(1, 1), new Vector2Int(19, 19));
         for (int i = 0; i < result.Count; i++)
         {
             Instantiate(cube, new Vector3(result[i].x, map[result[i].x,result[i].y] * depth, result[i].y), Quaternion.identity);
