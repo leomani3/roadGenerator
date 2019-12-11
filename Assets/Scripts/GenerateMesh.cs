@@ -62,6 +62,11 @@ public class GenerateMesh : MonoBehaviour
         }
 
         map = m;
+
+
+
+        //CALCUL DES ROUTES
+        
         dijkstra.height = height;
         dijkstra.width = width;
         result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(0, 0), new Vector2Int(400, 300));
@@ -70,17 +75,19 @@ public class GenerateMesh : MonoBehaviour
             Instantiate(cube, new Vector3(result[i].x, map[result[i].y,result[i].x] * depth, result[i].y), Quaternion.identity);
         }
 
-        //sous routes
-        List<Vector2Int> res = new List<Vector2Int>();
+        //routes secondaires
+
         for (int i = 0; i < nbSousRoutes; i++)
         {
-            res.AddRange(dijkstra.Dijsktra(mapDijkstra, result[Random.Range(2, result.Count)], new Vector2Int(Random.Range(5, 400), Random.Range(5, 400))));
+            List<Vector2Int> res = new List<Vector2Int>();
+
+            res = dijkstra.Dijsktra(mapDijkstra, result[Random.Range(0, result.Count)], new Vector2Int(Random.Range(5, 400), Random.Range(5, 400)));
+            for (int j = 0; j < res.Count; j++)
+            {
+                Instantiate(cube, new Vector3(res[j].x, map[res[j].y, res[j].x] * depth, res[j].y), Quaternion.identity);
+            }
         }
 
-        for (int j = 0; j < res.Count; j++)
-        {
-            Instantiate(cube, new Vector3(res[j].x, map[res[j].y, res[j].x] * depth, res[j].y), Quaternion.identity);
-        }
         return m;
     }
 
