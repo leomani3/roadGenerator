@@ -77,7 +77,7 @@ public class GenerateMesh : MonoBehaviour
 
         //routes secondaires
 
-        for (int i = 0; i < nbSousRoutes; i++)
+       /* for (int i = 0; i < nbSousRoutes; i++)
         {
             List<Vector2Int> res = new List<Vector2Int>();
 
@@ -86,7 +86,7 @@ public class GenerateMesh : MonoBehaviour
             {
                 Instantiate(cube, new Vector3(res[j].x, map[res[j].y, res[j].x] * depth, res[j].y), Quaternion.identity);
             }
-        }
+        }*/
 
         return m;
     }
