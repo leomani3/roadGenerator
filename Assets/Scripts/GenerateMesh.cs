@@ -50,13 +50,13 @@ public class GenerateMesh : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 m[x, y] = CalculPerlinNoise(x, y);
-                if (m[x,y] * depth > 90.0f)
+                if (m[x,y] * depth > 85.0f)
                 {
                     mapDijkstra[x, y] = new Node(x, y, -1, 100000);
                 }
                 else
                 {
-                    mapDijkstra[x, y] = new Node(x, y, -1, Mathf.RoundToInt(Mathf.Pow(m[x, y] * depth, 1)));
+                    mapDijkstra[x, y] = new Node(x, y, -1, Mathf.RoundToInt(Mathf.Pow(m[x, y] * depth, 2)));
                 }
             }
         }
@@ -66,27 +66,20 @@ public class GenerateMesh : MonoBehaviour
 
 
         //CALCUL DES ROUTES
-        
         dijkstra.height = height;
         dijkstra.width = width;
-        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(0, 0), new Vector2Int(400, 300));
+        List<Vector2Int> res = new List<Vector2Int>();
+        result = dijkstra.Dijsktra(mapDijkstra, new Vector2Int(0, 0), new Vector2Int(300, 400));
+        res = dijkstra.Dijsktra(mapDijkstra, result[Random.Range(0, result.Count - 1)], new Vector2Int(Random.Range(5, 400), Random.Range(5, 400)));
+        result.InsertRange(result.Count, res);
+        res = dijkstra.Dijsktra(mapDijkstra, result[Random.Range(0, result.Count- 1)], new Vector2Int(Random.Range(5, 400), Random.Range(5, 400)));
+        result.InsertRange(result.Count, res);
+        res = dijkstra.Dijsktra(mapDijkstra, result[Random.Range(0, result.Count - 1)], new Vector2Int(Random.Range(5, 400), Random.Range(5, 400)));
+        result.InsertRange(result.Count, res);
         for (int i = 0; i < result.Count; i++)
         {
             Instantiate(cube, new Vector3(result[i].x, map[result[i].y,result[i].x] * depth, result[i].y), Quaternion.identity);
         }
-
-        //routes secondaires
-
-       /* for (int i = 0; i < nbSousRoutes; i++)
-        {
-            List<Vector2Int> res = new List<Vector2Int>();
-
-            res = dijkstra.Dijsktra(mapDijkstra, result[Random.Range(0, result.Count)], new Vector2Int(Random.Range(5, 400), Random.Range(5, 400)));
-            for (int j = 0; j < res.Count; j++)
-            {
-                Instantiate(cube, new Vector3(res[j].x, map[res[j].y, res[j].x] * depth, res[j].y), Quaternion.identity);
-            }
-        }*/
 
         return m;
     }
